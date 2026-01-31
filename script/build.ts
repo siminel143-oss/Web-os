@@ -35,13 +35,15 @@ const allowlist = [
 async function buildAll() {
   await rm("dist", { recursive: true, force: true });
 
-  console.log("building client...");
 await viteBuild({
+  configFile: "vite.config.ts",
   root: "client",
   build: {
     outDir: "../dist/public",
     emptyOutDir: false,
   },
+  clearScreen: false,
+  logLevel: "info",
 });
 
   console.log("building server...");

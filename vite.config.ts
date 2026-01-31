@@ -6,8 +6,18 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { metaImagesPlugin } from "./vite-plugin-meta-images";
 
 export default defineConfig(({ command }) => {
-  const isDev = command === "serve";
-  const isReplit = process.env.REPL_ID !== undefined;
+  // ...
+  return {
+    root: "client",
+    // ...
+    build: {
+      // în loc de "../dist/public"
+      outDir: "../dist",
+      emptyOutDir: false,
+    },
+  };
+});
+;
 
   return {
     plugins: [

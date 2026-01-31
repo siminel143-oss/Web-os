@@ -562,12 +562,13 @@ function FirstRunOverlay({ onDismiss }: { onDismiss: () => void }) {
             variant="secondary"
             className="rounded-xl"
             onClick={() => {
-              try {
-                localStorage.removeItem(LS_KEYS.firstRun);
-              } catch {
-                // ignore
-              }
-              onDismiss();
+          try {
+               localStorage.setItem(LS_KEYS.firstRun, JSON.stringify(true));
+                 } catch {
+  // ignore
+                  }
+                 onDismiss();
+
             }}
             data-testid="button-first-run-continue"
           >
@@ -1446,9 +1447,10 @@ export default function Desktop() {
         />
       </div>
       
-      {(!firstRunDismissed || !localStorage.getItem(LS_KEYS.firstRun)) && (
-        <FirstRunOverlay onDismiss={() => setFirstRunDismissed(true)} />
-      )}
+   {!firstRunDismissed && (
+  <FirstRunOverlay onDismiss={() => setFirstRunDismissed(true)} />
+)}
+
       </div>
     </>
   );

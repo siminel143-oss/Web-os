@@ -1,0 +1,58 @@
+2026-01-31T08:07:56Z info: Deployment: 3db54fd4-64fe-411e-8866-fd21a9e35864
+2026-01-31T08:07:56Z info: Build: 269c27ed-3f7f-4ca9-b6c7-9a0a5c0e12a8
+2026-01-31T08:07:56Z info: Running Security Scan
+2026-01-31T08:08:24Z info: Security Scan Complete
+2026-01-31T08:08:24Z info: Connecting to builder
+2026-01-31T08:08:25Z info: Builder connected
+2026-01-31T08:08:25Z info: Installing packages
+--> npm install
+
+
+added 3 packages, and audited 389 packages in 3s
+
+52 packages are looking for funding
+
+  run `npm fund` for details
+
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.8.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.8.0
+npm notice To update run: npm install -g npm@11.8.0
+npm notice
+
+2026-01-31T08:08:29Z info: Skipping Build as no Build command set
+2026-01-31T08:08:30Z info: Pushing pid1 binary layer...
+2026-01-31T08:08:30Z info: Pushing Repl layer...
+2026-01-31T08:08:30Z info: Pushing hosting layer...
+2026-01-31T08:08:31Z info: Retrieved cached nix layer
+2026-01-31T08:08:31Z info: Created hosting layer
+2026-01-31T08:08:32Z info: Created pid1 binary layer
+2026-01-31T08:09:15Z info: Created Repl layer
+2026-01-31T08:09:17Z info: Pushed image manifest
+2026-01-31T08:09:18Z info: Pushed soci index manifest
+2026-01-31T08:09:21Z info: Creating Autoscale service
+}
+> NODE_ENV=production node dist/index.cjs
+starting up user application
+  ^
+Node.js v20.20.0
+    at Module._load (node:internal/modules/cjs/loader:1038:27)
+command finished with error [npm start]: exit status 1
+  ^
+> rest-express@1.0.0 start
+
+> rest-express@1.0.0 start
+}
+
+> NODE_ENV=production node dist/index.cjs
+    at Module._load (node:internal/modules/cjs/loader:1038:27)
+crash loop detected
+2026-01-31T08:11:01Z error: The deployment is crash looping. This can happen if the run command fails or exits immediately after starting. Check the logs for more information.

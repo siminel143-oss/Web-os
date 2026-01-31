@@ -5,9 +5,20 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { metaImagesPlugin } from "./vite-plugin-meta-images";
 
+// vite.config.ts
 export default defineConfig(({ command }) => {
-  const isDev = command === "serve";
-  const isReplit = process.env.REPL_ID !== undefined;
+  // ...
+  return {
+    root: "client",
+    // ...
+    build: {
+      outDir: "dist",
+      emptyOutDir: false,
+    },
+    // ...
+  };
+});
+
 
   return {
     root: "client",

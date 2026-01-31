@@ -2,53 +2,48 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-// @ts-ignore: optional dev-only plugin may not be installed in all environments
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { metaImagesPlugin } from "./vite-plugin-meta-images";
 
-export default defineConfig({
-  plugins: [
-    react(),
-    runtimeErrorOverlay(),
-    tailwindcss(),
-    metaImagesPlugin(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
-      ? [
-          // @ts-ignore: optional dev-only plugin may not be installed in all environments
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
-          // @ts-ignore: optional dev-only plugin may not be installed in all environments
-          await import("@replit/vite-plugin-dev-banner").then((m) =>
-            m.devBanner(),
-          ),
-        ]
-      : []),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(import.meta.dirname, "client", "src"),
-      "@shared": path.resolve(import.meta.dirname, "shared"),
-      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+export default defineConfig(({ command }) => {
+  const isDev = command === "serve";
+  const isReplit = process.env.REPL_ID !== undefined;
+
+  return {
+    plugins: [
+      react(),
+      tailwindcss(),
+      metaImagesPlugin(),
+
+      // ✅ only in dev (and only on Replit)
+      ...(isDev && isReplit ? [runtimeErrorOverlay()] : []),
+    ],
+
+    resolve: {
+      alias: {
+        "@": path.resolve(import.meta.dirname, "client", "src"),
+        "@shared": path.resolve(import.meta.dirname, "shared"),
+        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      },
     },
-  },
-  css: {
-    postcss: {
-      plugins: [],
+
+    root: path.resolve(import.meta.dirname, "client"),
+
+    build: {
+      outDir: path.resolve(import.meta.dirname, "dist", "public"),
+      emptyOutDir: false, // ✅ don't wipe dist (server bundle goes there)
     },
-  },
-  root: path.resolve(import.meta.dirname, "client"),
-  build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
-    emptyOutDir: true,
-  },
-  server: {
-    host: "0.0.0.0",
-    allowedHosts: true,
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
+
+    server: {
+      host: "0.0.0.0",
+      allowedHosts: true,
+      fs: {
+        strict: true,
+        deny: ["**/.*"],
+      },
     },
-  },
+
+    clearScreen: false,
+    logLevel: "info",
+  };
 });

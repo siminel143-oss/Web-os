@@ -1,27 +1,16 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-import { metaImagesPlugin } from "./vite-plugin-meta-images";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
+import runtimeErrorOverlay from '@replit/vite-plugin-runtime-error-modal';
+import { metaImagesPlugin } from './vite-plugin-meta-images';
 
-// vite.config.ts
 export default defineConfig(({ command }) => {
-  // ...
-  return {
-    root: "client",
-    // ...
-    build: {
-      outDir: "dist",
-      emptyOutDir: false,
-    },
-    // ...
-  };
-});
-
+  const isDev = command === 'serve';
+  const isReplit = process.env.REPL_ID !== undefined;
 
   return {
-    root: "client",
+    root: 'client',
     plugins: [
       react(),
       tailwindcss(),
@@ -30,22 +19,22 @@ export default defineConfig(({ command }) => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
-        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+        '@': path.resolve(__dirname, 'client', 'src'),
+        '@shared': path.resolve(__dirname, 'shared'),
+        '@assets': path.resolve(__dirname, 'attached_assets'),
       },
     },
     build: {
-      // ajustează outDir în funcție de ce vrei să expui pe Vercel
-      outDir: "../dist",
+      // pentru Vercel: generează output în client/dist
+      outDir: 'dist',
       emptyOutDir: false,
     },
     server: {
-      host: "0.0.0.0",
+      host: '0.0.0.0',
       allowedHosts: true,
-      fs: { strict: true, deny: ["**/.*"] },
+      fs: { strict: true, deny: ['**/.*'] },
     },
     clearScreen: false,
-    logLevel: "info",
+    logLevel: 'info',
   };
 });
